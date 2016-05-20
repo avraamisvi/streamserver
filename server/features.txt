@@ -1,0 +1,26 @@
+Features que preciso desenvolver:
+
+Servidor de pacotes e serviços:
+	
+	Analisa se um cliente esta em debito, se foi pago se houve troca de pacote e no caso atualiza a base com a informacao sobre o cliente.
+
+Servidor de autenticacao e autorizacao:
+
+	controla o acesso dos clientes aos servidores.
+	analisa se um cliente
+	Criar um sevidor de autenticaçao que gera uma chave e envia ao servidor de videos, que sera usada pelos clientes como token para poder baixar os videos (estudar melhores formas de auth).
+
+Servidor stream:
+	
+	(focado em servir os videos)
+	Avalia se o cliente remoto pode ser servido ( autenticacao e autorizacao ).
+	Guardar o perfil do usuario por tipo de video assistido.
+
+Servidor media:
+	
+	Serve o conteudo para os clientes remotos.
+	Avalia se o cliente remoto pode ser servido ( autenticacao e autorizacao ).
+	Avaliacao dos videos assistidos.
+	Configuracao do que deseja q seja exibido nos clientes.
+	Criar administrador do servidor, permitindo cadastro de videos por categorias, sessao e tipo.
+

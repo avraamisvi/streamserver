@@ -2,9 +2,9 @@
   <link href="bower_components/video.js/dist/video-js.css" rel="stylesheet">
 </head>
 
-<body>
-  <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" poster="MY_VIDEO_POSTER.jpg" data-setup="{}" preload="auto" >
-    <source src="http://localhost:8000/stream"  type='video/mp4'>    
+<body onload="loadVideo()">
+  <video id="my-video" class="video-js" controls preload="auto" width="640" height="264" >
+    <source src="http://localhost:8000/stream?v=1&tk=123456"  type='video/mp4'>    
     <p class="vjs-no-js">
       To view this video please enable JavaScript, and consider upgrading to a web browser that
       <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
@@ -12,4 +12,14 @@
   </video>
 
   <script src="bower_components/video.js/dist/video.js"></script>
+
+  <script type="text/javascript">
+  		
+  		function loadVideo () {
+			videojs("my-video", {}, function(){
+			  // Player (this) is initialized and ready.
+			});  	
+		}
+
+  </script>
 </body>

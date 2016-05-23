@@ -18,9 +18,52 @@ Servidor stream:
 
 Servidor media:
 	
-	Serve o conteudo para os clientes remotos.
+	Gerencia os videos.
+	pesquisa por id
+	pesquisa por nome
+	pesquisa por tipo, categoria, sessao
+
 	Avalia se o cliente remoto pode ser servido ( autenticacao e autorizacao ).
 	Avaliacao dos videos assistidos.
 	Configuracao do que deseja q seja exibido nos clientes.
 	Criar administrador do servidor, permitindo cadastro de videos por categorias, sessao e tipo.
+
+
+
+====================
+
+models:
+
+Redis:
+	UserSession
+		id
+		token
+
+MySql:
+
+	Profile
+		id
+		accountId
+		pass
+		name
+
+	Account	
+		id
+		pass
+		email
+
+	AccountInfo
+		id
+		accountId
+		name
+		address
+		country
+		city
+		state
+		zip
+
+Services
+	SecurityService
+		login(usuario, senha) - Retorna um token
+		validateToken (usuario, token) - valida no banco e persiste no redis
 

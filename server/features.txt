@@ -4,7 +4,7 @@ Servidor de pacotes e serviços:
 	
 	Analisa se um cliente esta em debito, se foi pago se houve troca de pacote e no caso atualiza a base com a informacao sobre o cliente.
 
-Servidor de autenticacao e autorizacao:
+Servidor de autenticacao e autorizacao: OK
 
 	controla o acesso dos clientes aos servidores.
 	analisa se um cliente

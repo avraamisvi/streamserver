@@ -8,7 +8,7 @@ import json
 from livia.services.securityservice import SecurityService
 
 #Usado por todos os handles
-security_service = SecurityService().connect()
+security_service = SecurityService().connect() #TODO colocar isso no run e passar por parametro?
 
 class AuthorizationService(tornado.web.RequestHandler):
 	EMAIL_PAR = "e"
@@ -24,7 +24,7 @@ class AuthorizationService(tornado.web.RequestHandler):
 		ok, code, token = security_service.login(email_par, pass_par)
 
 		self.set_header("Content-Type", "text/json")            
-		self.write(json.dumps({"status": ok, "code": code, "token": token}))
+		self.write(json.dumps({"status": ok, "code": str(code), "token": token}))
             
 
 class TokenCheckerService(tornado.web.RequestHandler):
@@ -44,7 +44,7 @@ class TokenCheckerService(tornado.web.RequestHandler):
 		self.set_header("Content-Type", "text/json")
 		self.write(json.dumps({"status": ok, "code": code_par, "token": token_par}))
 
-class SecurityServer:
+class SecurityServer(object):
 
 	def run(self):
 		app = tornado.web.Application([

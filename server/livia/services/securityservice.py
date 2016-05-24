@@ -13,6 +13,7 @@ from sqlalchemy.orm import sessionmaker
 from livia.model.account import Account
 from livia.model.base import Base
 
+#Usado apenas pelo security server
 class SecurityService:
 
 	def connect(self):
@@ -39,7 +40,11 @@ class SecurityRedisService:
 		return self
 
 	def check_token(self, code, token):
-		local_token = self.connection.get(code).decode("utf-8")
+		local_token = self.connection.get(code)
+		
+		if local_token:
+			local_token = local_token.decode("utf-8")
+
 		return  local_token == token
 
 	#O email sera usado como chave para achar o user
@@ -54,7 +59,7 @@ class SecurityRedisService:
 class SecurityRDBMSService:
 
 	def connect(self):
-		self.engine = create_engine("mysql://root:123456@localhost/livia")#TODO configurado
+		self.engine = create_engine("mysql://root:123456@localhost/livia")#TODO configurado, criar funcao global?
 		Base.metadata.bind = self.engine
 		Session = sessionmaker(bind=self.engine)
 		self.session = Session()

@@ -5,12 +5,19 @@ import tornado.web
 import tornado.gen
 import os
 
+from livia.services.mediaservice import MediaService
+from livia.services.mediaservice import FileService
+
 class VideoStreamerHandler(tornado.web.RequestHandler):
 
     CHUNK_SIZE = 512000         # 0.5 MB isso tem que ser calculado e tem q ter um limite
     authorized = False
-    VIDEO_ID_PAR = "v"
-    USER_TOKEN_PAR = "tk"
+    VIDEO_ID_PAR =   "v"
+    USER_TOKEN_PAR = "t"
+    USER_CODE_PAR =  "c"
+
+    def __init__(self):
+        self.mediaService = MediaService()
 
     @tornado.web.asynchronous
     @tornado.gen.engine
@@ -20,6 +27,8 @@ class VideoStreamerHandler(tornado.web.RequestHandler):
 
     def authorize(self):
         #TODO pesquisar no REDIS se o TOKEN eh valido tk=123456
+        self.token = self.get_argument(self.USER_TOKEN_PAR)
+        self.user_code = self.get_argument(self.USER_TOKEN_PAR)
         self.authorized = True
 
     def get_media(self, media_id):
@@ -44,12 +53,11 @@ class VideoStreamerHandler(tornado.web.RequestHandler):
             fd.close()
             self.finish()
 
-def make_app():
-    return tornado.web.Application([
-        (r"/stream", VideoStreamerHandler),
-    ])
+class StreamServer(object):
 
-if __name__ == "__main__":
-    app = make_app()
-    app.listen(8000)
-    tornado.ioloop.IOLoop.current().start()
+    def run(self):
+        app = tornado.web.Application([
+            (r"/stream/media", VideoStreamerHandler)
+        ])
+        app.listen(8200)#TODO Each server in its port 
+        tornado.ioloop.IOLoop.current().start()

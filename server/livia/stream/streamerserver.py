@@ -8,6 +8,8 @@ import os
 from livia.services.mediaservice import MediaService
 from livia.services.mediaservice import FileService
 
+from livia.security.client import SecurityClient
+
 class VideoStreamerHandler(tornado.web.RequestHandler):
 
     CHUNK_SIZE = 512000         # 0.5 MB isso tem que ser calculado e tem q ter um limite
@@ -17,7 +19,8 @@ class VideoStreamerHandler(tornado.web.RequestHandler):
     USER_CODE_PAR =  "c"
 
     def __init__(self):
-        self.mediaService = MediaService()
+        self.security_client = SecurityClient()
+        self.media_service = MediaService()
 
     @tornado.web.asynchronous
     @tornado.gen.engine
@@ -29,6 +32,9 @@ class VideoStreamerHandler(tornado.web.RequestHandler):
         #TODO pesquisar no REDIS se o TOKEN eh valido tk=123456
         self.token = self.get_argument(self.USER_TOKEN_PAR)
         self.user_code = self.get_argument(self.USER_TOKEN_PAR)
+
+        self.security_client.check_token(self.user_code, self.token)
+
         self.authorized = True
 
     def get_media(self, media_id):
